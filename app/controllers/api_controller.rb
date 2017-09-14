@@ -4,21 +4,21 @@ class ApiController < ApplicationController
     end
     
     def current_user
-    @current_user ||= authenticate_token
+        @current_user ||= authenticate_token
     end
 
     protected
 
     def render_unauthorized(method)
-    errors = { errors: [ detail: message ] }
-    render json: errors, status: :unauthorized
+        errors = { errors: [ detail: message ] }
+        render json: errors, status: :unauthorized
     end
 
     private
 
     def authenticate_token
-    authenticate_with_http_token do | token, options |
-        User.find_by(auth_token: token)
-    end
+        authenticate_with_http_token do | token, options |
+            User.find_by(auth_token: token)
+        end
     end
 end
