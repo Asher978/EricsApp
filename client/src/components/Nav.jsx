@@ -12,10 +12,10 @@ const Nav = (props) => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="#">Monsters</Link>
+            <Link to="#">Bookings</Link>
           </li>
           <li>
-            <Link to="#">Add a Monster</Link>
+            <Link to="#">Bio</Link>
           </li>
         </ul>
         {!Auth.isUserAuthenticated() ? (
@@ -30,7 +30,7 @@ const Nav = (props) => {
         ) : (
           <ul>
             <li>
-              <Link to="#">Dashboard</Link>
+              <Link to="/dash">Dashboard</Link>
             </li>
             <li>
               <span className="logout" onClick={props.logoutUser}>Log Out</span>
