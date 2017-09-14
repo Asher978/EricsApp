@@ -14,6 +14,7 @@ import Home from './components/Home';
 import Auth from './modules/Auth';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import Dash from './components/Dash';
 
 
 
@@ -135,7 +136,7 @@ class App extends Component {
                 handleLoginSubmit={this.handleLoginSubmit}
               />
             ) : (
-              <Redirect to="/Home" />
+              <Redirect to="/dash" />
             )}
         />
         <Route
@@ -148,14 +149,21 @@ class App extends Component {
                 registerUserName={this.state.registerUsername}
                 registerPassword={this.state.registerPassword}
                 registerEmail={this.state.registerEmail}
-                registerName={this.state.registerName}
+                registerFirstName={this.state.registerFirstName}
+                registerLastName={this.state.registerLastName}
                 handleInputChange={this.handleInputChange}
                 handleRegisterSubmit={this.handleRegisterSubmit}
               />
             ) : (
-              <Redirect to="/Home" />
+              <Redirect to="/dash" />
             )}
         />
+        <Route
+            exact
+            path="/dash"
+            render={() =>
+              this.state.auth ? <Dash auth={this.state.auth} resetFireRedirect={this.resetFireRedirect} /> : <Redirect to="/login" />}
+          />
       </div>
     </Router>
     );
