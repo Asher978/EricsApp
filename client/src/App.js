@@ -14,6 +14,7 @@ import Auth from './modules/Auth';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import Dash from './components/Dash';
+import Bio from './components/Bio';
 
 
 
@@ -163,6 +164,7 @@ class App extends Component {
             render={() =>
               this.state.auth ? <Dash auth={this.state.auth} resetFireRedirect={this.resetFireRedirect} /> : <Redirect to="/login" />}
           />
+        <Route exact path="/bio" component={Bio} />
       </div>
     </Router>
     );
