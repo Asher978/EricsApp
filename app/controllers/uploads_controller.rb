@@ -2,7 +2,7 @@ class UploadsController < ApiController
 
     def create
         upload = Upload.create!(upload_params)
-        render json: { message: 'Image was uploaded successfully!' }        
+        render json: { message: 'Image was uploaded successfully!', data: upload }        
     end
 
     def index
