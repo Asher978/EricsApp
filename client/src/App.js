@@ -15,6 +15,8 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import Dash from './components/Dash';
 import Bio from './components/Bio';
+import Calendar from './components/Calendar';
+import Appointment from './components/Appointment';
 
 
 
@@ -31,12 +33,16 @@ class App extends Component {
       registerEmail: '',
       registerFirstName: '',
       registerLastName: '',
+      appointmentTime: '',
+      appointmentDate: '',
+      appointmentDesc: '',
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     this.logoutUser = this.logoutUser.bind(this);
     this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
+    this.handleAppointmentSubmit = this.handleAppointmentSubmit.bind(this);
 
     this.resetFireRedirect = this.resetFireRedirect.bind(this);
 
@@ -90,6 +96,33 @@ class App extends Component {
     }).catch(err => {
       console.log(err);
     })
+  }
+
+  handleAppointmentSubmit (e) {
+    e.preventDefault();
+    axios('/appointments', {
+      method: 'POST',
+      data: {
+        appointment: {
+          date: this.state.appointmentDate,
+          time: this.state.appointmentTime,
+          description: this.state.appointmentDesc,
+        }
+      },
+      headers: {
+        'Authorization': `Token ${Auth.getToken()}`,
+        token: Auth.getToken(),
+      }
+    }).then(res => {
+      this.setState({
+        shouldFireRedirect: true,
+        appointmentDate: '',
+        appointmentTime: '',
+        appointmentDesc: '',
+      });
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   resetFireRedirect() {
@@ -165,6 +198,22 @@ class App extends Component {
               this.state.auth ? <Dash auth={this.state.auth} resetFireRedirect={this.resetFireRedirect} /> : <Redirect to="/login" />}
           />
         <Route exact path="/bio" component={Bio} />
+        <Route exact path="/calendar" component={Calendar} />
+        <Route exact path="/newappointment" 
+        render={() => 
+        this.state.auth ? (
+            <Appointment
+              appointmentDate={this.state.appointmentDate}
+              appointmentTime={this.state.appointmentTime}
+              appointmentDesc={this.state.appointmentDesc}
+              handleInputChange={this.handleInputChange}
+              handleAppointmentSubmit={this.handleAppointmentSubmit}
+              shouldFireRedirect={this.state.shouldFireRedirect}
+            />
+          ) : (
+            <Redirect to="/login" />
+          )}
+        />
       </div>
     </Router>
     );
