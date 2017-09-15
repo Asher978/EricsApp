@@ -12,9 +12,6 @@ const Nav = (props) => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="#">Bookings</Link>
-          </li>
-          <li>
             <Link to="/bio">Bio</Link>
           </li>
         </ul>
@@ -32,6 +29,12 @@ const Nav = (props) => {
             <li>
               <Link to="/dash">Dashboard</Link>
             </li>
+            <li>
+              <Link to="/calendar">Calendar</Link>
+            </li>
+            <li>
+              <Link to="/newappointment">Bookings</Link>
+          </li>
             <li>
               <span className="logout" onClick={props.logoutUser}>Log Out</span>
             </li>
