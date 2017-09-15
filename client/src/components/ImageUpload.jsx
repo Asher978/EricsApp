@@ -9,9 +9,8 @@ class ImageUpload extends Component {
     constructor () {
         super();
         this.state = {
-            uploadedPic: ''
+            uploadedPic: null,
         }
-
     }
 
     uploadFile = (files) => {
@@ -49,15 +48,14 @@ class ImageUpload extends Component {
                 console.log(err)
                 return
             } else {
-                var imgUrl = JSON.stringify(res.body.secure_url)
+                var imgUrl = res.body.secure_url
                 this.setState({ uploadedPic: imgUrl })
+
                 // pushing the uploaded url to rails db
                 axios.post('/uploads', {
                     upload: {
                         pic: this.state.uploadedPic
                     }
-                }).then(res => {
-                    console.log(res);
                 }).catch(err => {
                     console.log(err);
                 })
