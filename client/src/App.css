@@ -1,24 +1,40 @@
-.App {
+.App  {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.jumbotron  {
+  background-color: blue !important;
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9));
+  background: -o-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9));
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9));
+  height: 100%;
+  margin-bottom: 0;
+  color: white;
+  text-align: center;
 }
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+.input-group-addon  {
+  background-color: blue !important;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9));
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9));
+  background: -o-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9));
   color: white;
 }
 
-.App-intro {
-  font-size: large;
+.btn  {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  color: white;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.btn:hover  {
+  background-color: rgba(0, 0, 0, 1) !important;
+  color: white;
+  -webkit-transition: linear .5s;
+  -moz-transition: linear .5s;
+  transition: linear .5s;
 }
+
+.add  {
+  width: 50%;
+  text-align: center;
+}
+
