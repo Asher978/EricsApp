@@ -5,6 +5,11 @@ class UploadsController < ApiController
         render json: { message: 'Image was uploaded successfully!' }        
     end
 
+    def index
+        upload = Upload.all 
+        render json: { pics: upload }
+    end
+
     private
 
     def upload_params
