@@ -10,6 +10,8 @@ class ImageUpload extends Component {
         super();
         this.state = {
             uploadedPic: null,
+            picFromDb: null,
+            picFromDbLoaded: false,
         }
     }
 
@@ -56,6 +58,12 @@ class ImageUpload extends Component {
                     upload: {
                         pic: this.state.uploadedPic
                     }
+                }).then(res =>{
+                    console.log(res.data.data.pic)
+                    this.setState({
+                        picFromDb: res.data.data.pic,
+                        picFromDbLoaded: true,
+                    })
                 }).catch(err => {
                     console.log(err);
                 })
@@ -63,11 +71,25 @@ class ImageUpload extends Component {
         })
     }
 
+    renderUploadedPic () {
+        if(this.state.picFromDbLoaded) {
+            return (
+                <div>
+                    <h4>Your pic was uploaded successfully!</h4>
+                    <img src={this.state.picFromDb} alt="Uploaded Pic"/>
+                </div>
+            ) 
+        } else {
+            return <h4>Drag a Pic or Click in the box to upload a picture</h4>
+        }
+    }
+
     render () {
         return (
             <div>
                 Images for Uploads
                 <Dropzone onDrop={this.uploadFile} />
+                {this.renderUploadedPic()}
             </div>
         )
     }
