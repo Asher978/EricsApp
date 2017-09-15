@@ -5,8 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem "paperclip-dropbox", ">= 1.1.7"
-gem 'dropbox-sdk'
+gem 'dotenv-rails', :groups => [:development, :test]	# env variable to keep sensitive data hidden
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 # Use postgresql as the database for Active Record
