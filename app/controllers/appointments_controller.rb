@@ -10,12 +10,13 @@ class AppointmentsController < ApiController
         appointment = Appointment.new(appointment_params)
         appointment.user = current_user
         if appointment.save
+            AppointmentNotifierMailer.send_signup_email(appointment.user, appointment).deliver
             render json: {
-                message: 'ok',
+                message: 'Appointment was created and An email was sent to Eric! He will be in touch shortly. Thank you!',
                 appointment: appointment,
             }
         else
-            render json: { message: 'Could not create an appointment' }
+            render json: { message: 'Error in the submission. Please submit your request again!' }
         end
     end
 
