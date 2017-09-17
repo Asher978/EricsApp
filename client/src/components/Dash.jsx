@@ -22,7 +22,7 @@ class Dash extends Component {
         token: `${Auth.getToken()}`,
       }
     }).then(res => {
-      console.log(res.data.user)
+      console.log(res)
       this.setState({
         userData: res.data.user,
         userDataLoaded: true,
