@@ -8,7 +8,7 @@ const Appointment = (props) => {
         <div className="container">
             <Jumbotron>
                 <h1>Appointment Scheduling</h1>
-                <p>Add a new appointment by filling in the required info below!</p>
+                <p>Please enter below the best date & time that you are available to speak with me!</p>
             </Jumbotron>
             <form className='add' onSubmit={props.handleAppointmentSubmit}>
                 <div className='form-group'>
@@ -47,7 +47,7 @@ const Appointment = (props) => {
                         required />
                     </span>
                 </div>
-                <input type='submit' value='Book' className='btn' />
+                <input type='submit' value='Book' className='btn bookingbtn' />
             </form>
             {(props.shouldFiredRedirect) ? <Redirect to="/dash" /> : ''}
         </div>
