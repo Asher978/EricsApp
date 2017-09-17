@@ -1,24 +1,40 @@
 import React from 'react';
+import { Jumbotron } from 'react-bootstrap';
+
 
 const LoginForm = props => {
   return (
-    <form className="loginform" onSubmit={props.handleLoginSubmit}>
-      <input
-        type="text"
-        name="loginUserName"
-        value={props.loginUserName}
-        placeholder="Username"
-        onChange={props.handleInputChange}
-      />
-      <input
-        type="password"
-        name="loginPassword"
-        value={props.loginPassword}
-        placeholder="Password"
-        onChange={props.handleInputChange}
-      />
-      <input type="submit" value="Log in!" />
-    </form>
+    <div className="container">
+      <form className="add" onSubmit={props.handleLoginSubmit}>
+        <div className='form-group'>
+          <span className='input-group'>
+            <span className='input-group-addon'>UserName</span>
+            <input 
+            className='form-control' 
+            type="text"
+            name="loginUserName"
+            placeholder="Enter Your User Name"
+            value={props.loginUserName}
+            onChange={props.handleInputChange}
+            required />
+          </span>
+        </div>
+        <div className='form-group'>
+          <span className='input-group'>
+            <span className='input-group-addon'>Password</span>
+            <input 
+            className='form-control' 
+            type="password"
+            placeholder="Enter your Password"
+            name="loginPassword"
+            value={props.loginPassword}
+            onChange={props.handleInputChange}
+            required />
+          </span>
+        </div>
+        <input type="submit" value="Log in!" className="btn bookingbtn" />
+      </form> 
+    </div>
   );
 };
 
