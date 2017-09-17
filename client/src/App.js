@@ -36,6 +36,9 @@ class App extends Component {
       appointmentTime: '',
       appointmentDate: '',
       appointmentDesc: '',
+      admin: Auth.isUserAdmin(),
+      visible: false,
+      message: null,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -43,6 +46,7 @@ class App extends Component {
     this.logoutUser = this.logoutUser.bind(this);
     this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
     this.handleAppointmentSubmit = this.handleAppointmentSubmit.bind(this);
+    this.onDismiss = this.onDismiss.bind(this)
 
     this.resetFireRedirect = this.resetFireRedirect.bind(this);
 
@@ -64,11 +68,12 @@ class App extends Component {
     }).then(res => {
       console.log(res);
       if (res.data.token) {
-        Auth.authenticateToken(res.data.token);
+        Auth.authenticateToken(res.data.token, res.data.admin);
         this.setState({
           auth: Auth.isUserAuthenticated(),
           loginUserName: '',
           loginUserPassword: '',
+          admin: Auth.isUserAdmin(),
         })
       }
     }).catch(err => {
@@ -83,8 +88,8 @@ class App extends Component {
         username: this.state.registerUserName,
         password: this.state.registerPassword,
         email: this.state.registerEmail,
-        firstName: this.state.registerFirstName,
-        lastName: this.state.registerLastName,        
+        firstname: this.state.registerFirstName,
+        lastname: this.state.registerLastName,        
       }
     }).then(res => {
       if (res.data.token) {
@@ -114,11 +119,14 @@ class App extends Component {
         token: Auth.getToken(),
       }
     }).then(res => {
+      console.log(res)
       this.setState({
         shouldFireRedirect: true,
         appointmentDate: '',
         appointmentTime: '',
         appointmentDesc: '',
+        visible: true,
+        message: res.data.message,
       });
     }).catch(err => {
       console.log(err);
@@ -138,15 +146,21 @@ class App extends Component {
       headers: {
         'Authorization': `Token ${Auth.getToken()}`,
         token: Auth.getToken(),
+        admin: Auth.getAdmin(),
       }
     }).then(res => {
       Auth.deauthenticateUser();
       this.setState({
         auth: Auth.isUserAuthenticated(),
+        admin: Auth.isUserAdmin(),
         loginUserName: '',
         loginUserPassword: '',
       })
     })
+  }
+
+  onDismiss() {
+    this.setState({ visible: false });
   }
 
 
@@ -154,7 +168,7 @@ class App extends Component {
     return (
       <Router>
       <div className="app">
-        <Nav logoutUser={this.logoutUser} />
+        <Nav logoutUser={this.logoutUser} admin={this.state.admin} />
         <Route exact path="/" component={Home} />
         <Route
           exact
@@ -169,7 +183,7 @@ class App extends Component {
                 handleLoginSubmit={this.handleLoginSubmit}
               />
             ) : (
-              <Redirect to="/dash" />
+              <Redirect to="/" />
             )}
         />
         <Route
@@ -188,7 +202,7 @@ class App extends Component {
                 handleRegisterSubmit={this.handleRegisterSubmit}
               />
             ) : (
-              <Redirect to="/dash" />
+              <Redirect to="/" />
             )}
         />
         <Route
@@ -206,6 +220,9 @@ class App extends Component {
               appointmentDate={this.state.appointmentDate}
               appointmentTime={this.state.appointmentTime}
               appointmentDesc={this.state.appointmentDesc}
+              visible={this.state.visible}
+              message={this.state.message}
+              onDismiss={this.onDismiss}
               handleInputChange={this.handleInputChange}
               handleAppointmentSubmit={this.handleAppointmentSubmit}
               shouldFireRedirect={this.state.shouldFireRedirect}
