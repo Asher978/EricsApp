@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Jumbotron } from 'react-bootstrap';
+import { Alert } from 'reactstrap';
 
 const Appointment = (props) => {
 
@@ -49,6 +50,7 @@ const Appointment = (props) => {
                 </div>
                 <input type='submit' value='Book' className='btn bookingbtn' />
             </form>
+            <Alert isOpen={props.visible} toggle={props.onDismiss}>{props.message}</Alert>
             {(props.shouldFiredRedirect) ? <Redirect to="/dash" /> : ''}
         </div>
     )
