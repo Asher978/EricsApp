@@ -1,9 +1,9 @@
 class AppointmentsController < ApiController
-    before_action :require_login
+    before_action :require_login, except: [:index, :show]
 
     def index
         appointments = Appointment.all.includes(:user)
-        render json: { appointments: appointments.map(&:serialize) }
+        render json: { event: appointments.map(&:serialize) }
     end
 
     def create

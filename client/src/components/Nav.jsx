@@ -17,7 +17,7 @@ const Nav = (props) => {
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
-              <a className="navbar-brand" href="#">Project name</a>
+              <a className="navbar-brand" href="">Project name</a>
             </div>
             <div id="navbar" className="navbar-collapse collapse">
               <ul className="nav navbar-nav">
@@ -28,7 +28,7 @@ const Nav = (props) => {
                   <Link to="/bio">Bio</Link>
                 </li>
                 <li>
-                  <Link to="/newappointment">Bookings</Link>
+                  <Link to="/calendar">Calendar</Link>
                 </li>
                 {!Auth.isUserAuthenticated() ? (
           <ul className="nav navbar-nav">
@@ -42,7 +42,7 @@ const Nav = (props) => {
         ) : (
           <ul className="nav navbar-nav">
             <li>
-              <Link to="/calendar">Calendar</Link>
+              <Link to="/newappointment">Bookings</Link>
             </li>
             <li>
               <a className="logout" onClick={props.logoutUser}>Log Out</a>

@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+body {
+  /* font-family: "Cardo", serif; */
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  font-size: 2em;
+  -webkit-font-smoothing: antialiased !important;  
+}
+
 .jumbotron  {
   background-color: blue !important;
   background: -webkit-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9));
@@ -170,3 +178,9 @@
   margin-top: 5%;
 }
 
+
+/* CALNENDAR SETTINGS */
+
+.rbc-calendar  {
+  margin-top: 50px;
+}

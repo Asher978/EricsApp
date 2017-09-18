@@ -15,10 +15,10 @@ class Bio extends Component {
         axios('/uploads', {
           method: 'GET',
         }).then(res => {
-          this.setState({
+            this.setState({
               pictures: res.data.pics,
               picturesLoaded: true
-          })
+            })
         }).catch(err => {
             console.log(err);
         })
@@ -35,12 +35,13 @@ class Bio extends Component {
             return <h3>Loading ....</h3>
         }
     }
+    
 
     render () {
         // console.log(this.state.pictures)
         return (
-            <div>
-                {this.renderPics()}
+            <div className="bio container">
+                <h1>Bio Page</h1>
             </div>
         )
     }
