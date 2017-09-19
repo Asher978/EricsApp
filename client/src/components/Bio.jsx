@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Lightbox from 'react-images';
 import axios from 'axios';
 
 
@@ -6,17 +7,64 @@ class Bio extends Component {
     constructor () {
         super();
         this.state = {
-            pictures: null,
-            picturesLoaded: false
+            pictures: '',
+            lightBoxImage: '',
+            picturesLoaded: false,
+            lightboxIsOpen: false,
+            currentImage: 0,
         }
     }
+
+
+    // SOURCE: https://github.com/jossmac/react-images
+    openLightbox = (index, event) => {
+		event.preventDefault();
+		this.setState({
+			currentImage: index,
+			lightboxIsOpen: true,
+		});
+	}
+	closeLightbox = () => {
+		this.setState({
+			currentImage: 0,
+			lightboxIsOpen: false,
+		});
+	}
+	gotoPrevious = () => {
+		this.setState({
+			currentImage: this.state.currentImage - 1,
+		});
+	}
+	gotoNext = () => {
+		this.setState({
+			currentImage: this.state.currentImage + 1,
+		});
+	}
+	gotoImage = (index) => {
+		this.setState({
+			currentImage: index,
+		});
+	}
+	handleClickImage = () => {
+		if (this.state.currentImage === this.state.pictures.length - 1) return;
+
+		this.gotoNext();
+	}
 
     componentDidMount() {
         axios('/uploads', {
           method: 'GET',
         }).then(res => {
+            let imageSet = res.data.pics.map(p => {
+                return {
+                    src: p.pic,
+                    srcset: [p.pic],
+                }
+            })
+            console.log(imageSet)
             this.setState({
               pictures: res.data.pics,
+              lightBoxImage: imageSet,
               picturesLoaded: true
             })
         }).catch(err => {
@@ -26,22 +74,52 @@ class Bio extends Component {
 
     renderPics () {
         if (this.state.picturesLoaded) {
-            return this.state.pictures.map(pic => {
-                console.log(pic.pic)
-                console.log(pic.pic[0])
-                return <img key={pic.id} src={pic.pic} alt={pic.id} />
-            })
-        } else {
-            return <h3>Loading ....</h3>
+            const gallery = this.state.pictures.map((obj, i) => {
+                return (
+                    <div key={i} className="col-lg-3 col-sm-4 col-xs-6">
+                    <a
+                        href={obj.pic}
+                        key={i}
+                        onClick={(e) => this.openLightbox(i, e)}
+                    >
+                        <img className="thumbnail img-responsive" src={obj.pic} />
+                    </a>
+                    </div>
+                );
+            });
+
+            return (
+                <div className="container">
+                    <div className="row">
+                        {gallery}
+                    </div>
+                </div>
+            );
         }
     }
-    
+
 
     render () {
-        // console.log(this.state.pictures)
         return (
             <div className="bio container">
-                <h1>Bio Page</h1>
+                <div className="container">
+                    <div className="row">
+                        <h1>Gallery</h1>
+                            {this.renderPics()}
+                            <Lightbox
+                                currentImage={this.state.currentImage}
+                                images={this.state.lightBoxImage}
+                                isOpen={this.state.lightboxIsOpen}
+                                onClickImage={this.handleClickImage}
+                                onClickNext={this.gotoNext}
+                                onClickPrev={this.gotoPrevious}
+                                onClose={this.closeLightbox}
+                            />
+                            <hr />
+                        <hr />
+                    </div>
+                </div>
+                
             </div>
         )
     }
