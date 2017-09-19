@@ -62,7 +62,6 @@ class Bio extends Component {
                     caption: 'Photo By Wiley Inc™'
                 }
             })
-            console.log(imageSet)
             this.setState({
               pictures: res.data.pics,
               lightBoxImage: imageSet,
@@ -83,7 +82,7 @@ class Bio extends Component {
                         key={i}
                         onClick={(e) => this.openLightbox(i, e)}
                     >
-                        <img className="thumbnail img-responsive" src={obj.pic} />
+                        <img className="thumbnail img-responsive" src={obj.pic} alt="" />
                     </a>
                     </div>
                 );
