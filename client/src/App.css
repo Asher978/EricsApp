@@ -184,3 +184,14 @@ body {
 .rbc-calendar  {
   margin-top: 50px;
 }
+
+
+/* BIO PAGE SETTINGS */
+
+.modal-dialog  {
+  width:600px;
+}
+
+.thumbnail  {
+  margin-bottom:6px;
+}
