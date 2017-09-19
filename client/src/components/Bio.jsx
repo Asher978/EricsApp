@@ -59,6 +59,7 @@ class Bio extends Component {
                 return {
                     src: p.pic,
                     srcset: [p.pic],
+                    caption: 'Photo By Wiley Inc™'
                 }
             })
             console.log(imageSet)
