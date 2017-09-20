@@ -5,16 +5,14 @@ import moment from 'moment';
 
 
 class AdminBookings extends Component {
-    constructor (props) {
-        super(props);
-    }
+
     renderClientsBookings = () => {
         if (this.props.appointmentsLoaded) {
             return this.props.appointments.map(book => {
                 return (
                     <tr key={book.id}>
                         <td>{book.username}&nbsp;<button type="button"
-                                                         className="btn btn-danger btn-sm" 
+                                                         className="btn btn-danger btn-xs" 
                                                          aria-label="Left Align"
                                                         onClick={() => this.props.handleDeleteBooking(book.id)}>
                                                         <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
