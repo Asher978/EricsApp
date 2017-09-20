@@ -3,6 +3,9 @@ import superagent from 'superagent';
 import Dropzone from 'react-dropzone';
 import sha1 from 'sha1';
 import axios from 'axios';
+import { Jumbotron } from 'react-bootstrap';
+import drop from '../assets/drop.svg'
+
 
 
 class ImageUpload extends Component {
@@ -12,11 +15,16 @@ class ImageUpload extends Component {
             uploadedPic: null,
             picFromDb: null,
             picFromDbLoaded: false,
+            accept: [],
+            reject: [],
         }
     }
 
-    uploadFile = (files) => {
-        console.log('uploadFile: ')
+    uploadFile = (files, reject) => {
+        this.setState({
+            accept: files,
+            reject: reject,
+        });
         const image = files[0]
 
         const cloudName = 'dnixq4nvb';
@@ -71,25 +79,48 @@ class ImageUpload extends Component {
         })
     }
 
+
     renderUploadedPic () {
         if(this.state.picFromDbLoaded) {
             return (
                 <div>
-                    <h4>Your pic was uploaded successfully!</h4>
-                    <img src={this.state.picFromDb} alt="Uploaded Pic"/>
+                    <img className="uploadedImage" src={this.state.picFromDb} alt="Uploaded Pic"/>
                 </div>
             ) 
-        } else {
-            return <h4>Drag a Pic or Click in the box to upload a picture</h4>
         }
     }
 
     render () {
         return (
-            <div>
-                Images for Uploads
-                <Dropzone onDrop={this.uploadFile} />
+            <div className="container">
+                <Jumbotron>
+                    <h1>Image Uploads</h1>
+                    <img src={drop} />
+                </Jumbotron>
+                <Dropzone
+                accept="image/jpeg, image/png, image/jpg"
+                onDrop={(files, reject) => this.uploadFile(files, reject)}>
+                {({ isDragActive, isDragReject, acceptedFiles, rejectedFiles }) => {
+                        return this.state.accept.length || this.state.reject.length
+                            ? `Accepted ${this.state.accept.length}, rejected ${this.state.reject.length} files`
+                            : "Drag a Pic or Click in the box to upload a picture";
+                }}
+                </Dropzone>
                 {this.renderUploadedPic()}
+                <aside>
+                    <h3>Accepted files</h3>
+                    <ul>
+                        {
+                        this.state.accept.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
+                        }
+                    </ul>
+                    <h3>Rejected files</h3>
+                    <ul>
+                        {
+                        this.state.reject.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
+                        }
+                    </ul>
+                </aside>
             </div>
         )
     }
