@@ -4,7 +4,7 @@ import './App.css';
 import {
   BrowserRouter as Router,
   Route,
-  Redirect,
+  Redirect
 } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,6 +17,7 @@ import Dash from './components/Dash';
 import Bio from './components/Bio';
 import Calendar from './components/Calendar';
 import Appointment from './components/Appointment';
+import AdminBookings from './components/AdminBookings';
 
 
 
@@ -39,6 +40,8 @@ class App extends Component {
       admin: Auth.isUserAdmin(),
       visible: false,
       message: null,
+      appointments: null, 
+      appointmentsLoaded: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -127,6 +130,7 @@ class App extends Component {
         appointmentDesc: '',
         visible: true,
         message: res.data.message,
+        appointments: res.data.event,
       });
     }).catch(err => {
       console.log(err);
@@ -163,6 +167,37 @@ class App extends Component {
     this.setState({ visible: false });
   }
 
+  handleDeleteBooking = (id) => {
+    console.log(id)
+    axios('/appointments', {
+      method: 'DELETE',
+      params: { appointment_id: id },
+      headers: {
+        'Authorization': `Token ${Auth.getToken()}`,
+        token: Auth.getToken(),
+        admin: Auth.getAdmin(),
+      },
+    }).then(res => {
+      this.setState({
+        appointments: res.data.event,
+      })
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  componentDidMount() {
+    axios('/appointments', {
+        method: 'GET',
+    }).then(res => {
+        this.setState({
+            appointments: res.data.event, 
+            appointmentsLoaded: true,
+        })
+    }).catch(err => {
+        console.log(err);
+    })    
+  }
 
   render() {
     return (
@@ -230,6 +265,17 @@ class App extends Component {
           ) : (
             <Redirect to="/login" />
           )}
+        />
+        <Route 
+          exact
+          path="/adminbookings"
+          render={() =>
+            this.state.auth && this.state.admin ? <AdminBookings 
+                                                    handleDeleteBooking={this.handleDeleteBooking}
+                                                    appointments={this.state.appointments}
+                                                    appointmentsLoaded={this.state.appointmentsLoaded}
+                                                     /> : <Redirect to="/login" />
+          }
         />
       </div>
     </Router>
