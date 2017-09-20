@@ -7,26 +7,7 @@ import moment from 'moment';
 class AdminBookings extends Component {
     constructor (props) {
         super(props);
-        // this.state = {
-        //     appointments: null,
-        //     appointmentsLoaded: false,
-        // }
     }
-
-    // componentDidMount() {
-    //     axios('/appointments', {
-    //         method: 'GET',
-    //     }).then(res => {
-    //         console.log(res)
-    //         this.setState({
-    //             appointments: res.data.event, 
-    //             appointmentsLoaded: true,
-    //         })
-    //     }).catch(err => {
-    //         console.log(err);
-    //     })
-    // }
-
     renderClientsBookings = () => {
         if (this.props.appointmentsLoaded) {
             return this.props.appointments.map(book => {
