@@ -31,6 +31,10 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.delivery_method = :smtp
+
+  
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -46,4 +50,5 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
 end
+
 
