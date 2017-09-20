@@ -21,7 +21,7 @@ class AppointmentsController < ApiController
             render json: { message: 'Error in the submission. Please submit your request again!' }
         end
     end
-
+    
     def destroy
         app = Appointment.delete(params[:appointment_id])
         appointments = Appointment.all
