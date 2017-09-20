@@ -5,6 +5,6 @@ class Appointment < ApplicationRecord
     delegate :username, to: :user
 
     def serialize
-        slice(:time, :date, :username)
+        slice(:time, :date, :username, :id)
     end
 end
