@@ -6,7 +6,7 @@ September, 2107
 #### The Master Mind
 - Asher Shaheen
 
-### Deployed Link: [Code-Share Link](https://ericsapp.herokuapp.com/)
+### Deployed Link: [Eric Wiley](https://ericsapp.herokuapp.com/)
 
 ## Description 
 
