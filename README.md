@@ -3,7 +3,7 @@
 General Assembly WDI NYC
 September, 2107
 
-#### The Master Minds
+#### The Master Mind
 - Asher Shaheen
 
 ## Description 
@@ -64,3 +64,34 @@ The project entails a portfolio website for a NYC Photographer. The website has 
 ```
 
 </details>
+
+## Snap Shot of File Structure (Front End)
+
+```
+|_ client
+    |_ node_modules
+    |_ public
+    |_ src
+        |_ assets
+        |_ components
+        |    |_ AdminBooking.jsx
+        |    |_ Appointment.jsx
+        |    |_ Bio.jsx
+        |    |_ Calendar.jsx
+        |    |_ Dash.jsx
+        |    |_ Home.jsx
+        |    |_ ImageUpload.jsx
+        |    |_ LoginForm.jsx
+        |    |_ Nav.jsx
+        |    |_ RegisterForm.jsx
+        |
+        |__ modules
+        |    |_ Auth.js
+        |
+        |__ App.js        
+        |__ App.css
+        |__ index.js
+        |__ index.css
+        |__ registerServiceWorker.js
+```
+
