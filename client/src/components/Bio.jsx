@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Lightbox from 'react-images';
 import axios from 'axios';
+import { Jumbotron } from 'react-bootstrap';
 
 
 class Bio extends Component {
@@ -101,10 +102,12 @@ class Bio extends Component {
 
     render () {
         return (
-            <div className="bio container">
+            <div className="container">
+                <Jumbotron>
+                    <h1>Gallery</h1>
+                </Jumbotron>
                 <div className="container">
                     <div className="row">
-                        <h1>Gallery</h1>
                             {this.renderPics()}
                             <Lightbox
                                 currentImage={this.state.currentImage}
