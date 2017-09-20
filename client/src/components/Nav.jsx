@@ -25,7 +25,7 @@ const Nav = (props) => {
                   <Link to="/">Home</Link>            
                 </li>
                 <li>
-                  <Link to="/bio">Bio</Link>
+                  <Link to="/bio">Gallery</Link>
                 </li>
                 <li>
                   <Link to="/calendar">Calendar</Link>
@@ -52,8 +52,12 @@ const Nav = (props) => {
                 
         {(props.admin === 'true') ?  (
             <ul className="nav navbar-nav">
-              <li>
-                <Link to="/dash">Dasboard</Link>
+              <li className="dropdown">
+                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span className="caret"></span></a>
+                <ul className="dropdown-menu">
+                  <li><Link to="/dash">Image Uploads</Link></li>
+                  <li><Link to="/adminbookings">View Bookings</Link></li>                  
+                </ul>
               </li>
             </ul>
         ) : ( false )}
