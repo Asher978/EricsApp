@@ -6,9 +6,12 @@ September, 2107
 #### The Master Mind
 - Asher Shaheen
 
+### Deployed Link: [Code-Share Link](https://ericsapp.herokuapp.com/)
+
+## Description 
 
 ![ERIC WILEY](https://github.com/Asher978/EricsApp/blob/master/wireframes/Screen%20Shot%202017-09-20%20at%2010.38.12%20AM.png)
-## Description 
+
 The project entails a portfolio website for a NYC Photographer. The website has two interfaces one for the _CLIENTS_ and the other for the _PHOTOGRAPHER_. A client has access to all of the photographer's work _(PICS)_, an option to view photographer's schedule based on his bookings and an option to create a _BOOKING_. Photographer has an option to _VIEW_ and _DELETE_ all of his _BOOKINGS_ and an option to upload his work _(PICS)_ to a cloud server and ability for his clients to view those uploads on his page. 
 
 ### User Stories
