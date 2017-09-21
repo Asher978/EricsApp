@@ -18,6 +18,9 @@ import Bio from './components/Bio';
 import Calendar from './components/Calendar';
 import Appointment from './components/Appointment';
 import AdminBookings from './components/AdminBookings';
+import Booking from './modules/Booking';
+import * as firebase from 'firebase';
+
 
 
 
@@ -42,7 +45,20 @@ class App extends Component {
       message: null,
       appointments: null, 
       appointmentsLoaded: false,
+      bookings: [],
     };
+    const config = {
+        apiKey: "AIzaSyAil_1uLU4pZylnry_BPbEcHO5i5bJ3tY8",
+        authDomain: "ericapp-1a07a.firebaseapp.com",
+        databaseURL: "https://ericapp-1a07a.firebaseio.com",
+        projectId: "ericapp-1a07a",
+        storageBucket: "ericapp-1a07a.appspot.com",
+        messagingSenderId: "874674165009"
+    };
+    
+    firebase.initializeApp(config);
+    this.rootRef = firebase.database().ref();
+    this.bookings = this.rootRef.child('appoint');
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
@@ -50,6 +66,7 @@ class App extends Component {
     this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
     this.handleAppointmentSubmit = this.handleAppointmentSubmit.bind(this);
     this.onDismiss = this.onDismiss.bind(this)
+    this.getAppointments = this.getAppointments.bind(this);
 
     this.resetFireRedirect = this.resetFireRedirect.bind(this);
 
@@ -131,6 +148,7 @@ class App extends Component {
         visible: true,
         message: res.data.message,
         appointments: res.data.event,
+        appointmentsLoaded: true,
       });
     }).catch(err => {
       console.log(err);
@@ -180,23 +198,48 @@ class App extends Component {
     }).then(res => {
       this.setState({
         appointments: res.data.event,
+        appointmentsLoaded: true,
       })
     }).catch(err => {
       console.log(err);
     })
   }
 
-  componentDidMount() {
+  getAppointments () {
     axios('/appointments', {
         method: 'GET',
-    }).then(res => {
+      }).then(res => {
         this.setState({
-            appointments: res.data.event, 
-            appointmentsLoaded: true,
+          appointments: res.data.event,
+          appointmentsLoaded: true,
         })
     }).catch(err => {
         console.log(err);
-    })    
+    }) 
+  }
+
+  componentDidMount() {
+    console.log('render from App.js')
+    this.getAppointments();
+  }
+  
+  componentWillMount() {
+    this.bookings.on('child_added', snapshot => {
+      const myBookings = snapshot.val();
+      const updatedBookings = [...this.state.bookings];
+      myBookings.key = snapshot.key;
+      updatedBookings.push(myBookings)
+      this.setState({ bookings: updatedBookings })
+      console.log(this.state.bookings)
+    })
+
+    this.bookings.on('child_removed', snapshot => {
+      const updatedBookings = [...this.state.bookings];
+      for(let i=0; i < updatedBookings.length; i++) {
+        updatedBookings.splice(i, 1)
+        this.setState({ bookings: updatedBookings })
+      };
+    });
   }
 
   render() {
@@ -272,7 +315,8 @@ class App extends Component {
           render={() =>
             this.state.auth && this.state.admin ? <AdminBookings 
                                                     handleDeleteBooking={this.handleDeleteBooking}
-                                                    appointments={this.state.appointments}
+                                                    getAppointments={this.getAppointments}
+                                                    appointments={this.state.bookings}
                                                     appointmentsLoaded={this.state.appointmentsLoaded}
                                                      /> : <Redirect to="/login" />
           }
