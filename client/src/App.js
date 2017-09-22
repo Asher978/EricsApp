@@ -18,7 +18,6 @@ import Bio from './components/Bio';
 import Calendar from './components/Calendar';
 import Appointment from './components/Appointment';
 import AdminBookings from './components/AdminBookings';
-import Booking from './modules/Booking';
 import * as firebase from 'firebase';
 
 
@@ -58,7 +57,7 @@ class App extends Component {
     
     firebase.initializeApp(config);
     this.rootRef = firebase.database().ref();
-    this.bookings = this.rootRef.child('appoint');
+    this.bookingsRef = this.rootRef.child('appoint');
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
@@ -185,8 +184,9 @@ class App extends Component {
     this.setState({ visible: false });
   }
 
-  handleDeleteBooking = (id) => {
+  handleDeleteBooking = (id, key) => {
     console.log(id)
+    this.bookingsRef.child(key).set(null)
     axios('/appointments', {
       method: 'DELETE',
       params: { appointment_id: id },
@@ -219,25 +219,25 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('render from App.js')
     this.getAppointments();
   }
   
   componentWillMount() {
-    this.bookings.on('child_added', snapshot => {
+    this.bookingsRef.on('child_added', snapshot => {
       const myBookings = snapshot.val();
       const updatedBookings = [...this.state.bookings];
       myBookings.key = snapshot.key;
       updatedBookings.push(myBookings)
       this.setState({ bookings: updatedBookings })
-      console.log(this.state.bookings)
     })
 
-    this.bookings.on('child_removed', snapshot => {
+    this.bookingsRef.on('child_removed', snapshot => {
       const updatedBookings = [...this.state.bookings];
       for(let i=0; i < updatedBookings.length; i++) {
-        updatedBookings.splice(i, 1)
-        this.setState({ bookings: updatedBookings })
+        if(updatedBookings[i].key === snapshot.key) {
+          updatedBookings.splice(i, 1)
+          this.setState({ bookings: updatedBookings })
+        }
       };
     });
   }
@@ -315,9 +315,9 @@ class App extends Component {
           render={() =>
             this.state.auth && this.state.admin ? <AdminBookings 
                                                     handleDeleteBooking={this.handleDeleteBooking}
-                                                    getAppointments={this.getAppointments}
                                                     appointments={this.state.bookings}
                                                     appointmentsLoaded={this.state.appointmentsLoaded}
+                                                    firebaseRef={this.bookingsRef}
                                                      /> : <Redirect to="/login" />
           }
         />
