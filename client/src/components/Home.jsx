@@ -1,6 +1,5 @@
 import React from 'react';
 import imageA from '../assets/imageA.jpg'
-import imageB from '../assets/imageB.jpg'
 import imageC from '../assets/imageC.jpg'
 import wedding from '../assets/wedding.jpg'
 import days from '../assets/days.jpg'
@@ -115,7 +114,7 @@ const Home = () => {
        
       </div>
       <div className="col-md-5">
-        <img className="featurette-image img-responsive center-block" src={kids} />
+        <img className="featurette-image img-responsive center-block" src={kids} alt='' />
       </div>
     </div>
 

@@ -95,7 +95,7 @@ class ImageUpload extends Component {
             <div className="container">
                 <Jumbotron>
                     <h1>Image Uploads</h1>
-                    <img src={drop} />
+                    <img src={drop} alt="" />
                 </Jumbotron>
                 <Dropzone
                 accept="image/jpeg, image/png, image/jpg"

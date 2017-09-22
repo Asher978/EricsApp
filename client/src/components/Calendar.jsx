@@ -27,7 +27,6 @@ class Calendar extends Component {
     axios('/appointments', {
       method: 'GET',
     }).then(res => {
-      console.log(res)
       let e = res.data.event.map(eve => {
         return {
           title: eve.username,
