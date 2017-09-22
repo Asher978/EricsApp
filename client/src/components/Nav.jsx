@@ -52,7 +52,7 @@ const Nav = (props) => {
         {(props.admin === 'true') ?  (
             <ul className="nav navbar-nav">
               <li className="dropdown">
-                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span className="caret"></span></a>
+                <a href=".#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span className="caret"></span></a>
                 <ul className="dropdown-menu">
                   <li><Link to="/dash">Image Uploads</Link></li>
                   <li><Link to="/adminbookings">View Bookings</Link></li>                  
