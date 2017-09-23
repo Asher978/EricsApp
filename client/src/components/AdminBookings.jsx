@@ -28,8 +28,8 @@ class AdminBookings extends Component {
                                                          <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                          </button>
                                                          </td>
-                        <td>{book.date}</td>
-                        <td>{`${moment(book.time, 'HH:mm').format('hh:mm a')}`}</td>
+                        <td>{`${moment(book.date).format('MMM D, Y')}`}</td>
+                        <td>{`${moment.utc(book.time).format('hh:mm a')}`}</td>
                     </tr>
                 )
             })
