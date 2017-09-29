@@ -6,6 +6,9 @@ class AppointmentsController < ApiController
 
     def index
         appointments = Appointment.all.includes(:user)
+        time_since_last_admin_logout = user.last_logout
+        # recent_appointments = Appointment.where('created_at > ?' current_user.last_logout)
+        # recent_appointments: {event: appointments.map(&:serialize) } (this will go in the json response)
         render json: { event: appointments.map(&:serialize) }
     end
 
