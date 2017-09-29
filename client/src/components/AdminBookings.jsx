@@ -5,66 +5,24 @@ import moment from 'moment';
 
 
 class AdminBookings extends Component {
-    constructor (props) {
-        super(props);
-        this.state = {
-            appointments: this.props.appointments,
-            appointmentsLoaded: this.props.appointmentsLoaded,
-        }
 
+    renderClientsBookings () {
+        return this.props.appointments.map(book => {
+            return (
+                <tr key={book.id} id={book.key}>
+                    <td>{book.user}&nbsp;<button type="button"
+                                                        className="btn btn-danger btn-xs" 
+                                                        aria-label="Left Align"
+                                                        onClick={() => this.props.handleDeleteBooking(book.id, book.key)}>
+                                                        <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                        </button>
+                                                        </td>
+                    <td>{`${moment(book.date).format('MMM D, Y')}`}</td>
+                    <td>{`${moment.utc(book.time).format('hh:mm a')}`}</td>
+                </tr>
+            )
+        })
     }
-    
-
-
-    renderClientsBookings = () => {
-        if (this.props.appointmentsLoaded) {
-            return this.props.appointments.map(book => {
-                return (
-                    <tr key={book.id} id={book.key}>
-                        <td>{book.user}&nbsp;<button type="button"
-                                                         className="btn btn-danger btn-xs" 
-                                                         aria-label="Left Align"
-                                                         onClick={() => this.props.handleDeleteBooking(book.id, book.key)}>
-                                                         <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                                         </button>
-                                                         </td>
-                        <td>{`${moment(book.date).format('MMM D, Y')}`}</td>
-                        <td>{`${moment.utc(book.time).format('hh:mm a')}`}</td>
-                    </tr>
-                )
-            })
-        }
-    }
-
-    // componentWillReceiveProps(nextProps) {
-    //     console.log('props recevied', nextProps)
-    //     this.setState({
-    //         appointments: nextProps.appointments,
-    //         appointmentsLoaded: nextProps.appointmentsLoaded,
-    //     })
-    // }
-
-    // componentDidMount() {
-    //     console.log('from adminBookings')
-    //     this.props.getAppointments()
-    // }
-
-    // componentWillMount () {
-    //     const savedBokoking = this.state.appointments;
-    //     // DataSnapshot
-    //     this.rootRef.on('child_added', snap => {
-    //       savedZ.push({
-    //         id: snap.key,
-    //         zipContent: snap.val().zipContent,
-    //         weatherContent: snap.val().weatherContent,
-    //         dateContent: snap.val().dateContent,
-    //       })
-    //       this.setState({
-    //         fbZip: savedZ,
-    //       })
-    //     })
-    // }
-
 
     render () {
         return (
