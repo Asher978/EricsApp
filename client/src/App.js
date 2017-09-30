@@ -11,7 +11,6 @@ import axios from 'axios';
 import Nav from './components/Nav';
 import Home from './components/Home';
 import Auth from './modules/Auth';
-import Booking from './modules/Booking';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import Dash from './components/Dash';
@@ -46,7 +45,6 @@ class App extends Component {
       appointments: null, 
       appointmentsLoaded: false,
       bookings: [],
-      bookingsLength: Booking.getBookings(),
     };
     const config = {
         apiKey: "AIzaSyAil_1uLU4pZylnry_BPbEcHO5i5bJ3tY8",
@@ -220,18 +218,14 @@ class App extends Component {
     }) 
   }
 
-  // componentDidMount() {
-  //   this.getAppointments();
-  //   console.log(this.state.bookings)
-  // }
-  
   componentDidMount() {
-
-    //TODO use 'ONCE' and use forEach to loop
-
+    this.getAppointments();
+  }
+  
+  componentWillMount() {
     this.bookingsRef.on('child_added', snapshot => {
-      const updatedBookings = [...this.state.bookings];
       const myBookings = snapshot.val();
+      const updatedBookings = [...this.state.bookings];
       myBookings.key = snapshot.key;
       updatedBookings.push(myBookings)
       this.setState({ bookings: updatedBookings })
